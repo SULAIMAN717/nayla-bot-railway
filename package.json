@@ -1,12 +1,13 @@
 {
-  "name": "nayla-bot-railway",
+  "name": "nayla-bot",
   "version": "1.0.0",
-  "description": "Nayla Bot for WhatsApp, powered by GPT-4, deployed on Railway.",
+  "description": "Bot WhatsApp auto-reply terhubung ke N8N",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "@whiskeysockets/baileys": "^6.6.0",
+    "axios": "^1.6.8"
   }
 }
