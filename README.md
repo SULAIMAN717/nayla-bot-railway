@@ -1,2 +1,3 @@
 # Nayla Bot for Railway
-Auto-deploy ready project.
+
+Auto-deploy bot powered by GPT-4.

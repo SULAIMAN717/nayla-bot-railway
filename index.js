@@ -1,7 +1,11 @@
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3000;
 
-const { Client } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
-const client = new Client();
-client.on('qr', (qr) => { qrcode.generate(qr, { small: true }); });
-client.on('ready', () => { console.log('Nayla Bot aktif!'); });
-client.initialize();
+app.get("/", (req, res) => {
+  res.send("Nayla Bot for Railway is Running ✅");
+});
+
+app.listen(port, () => {
+  console.log(`Nayla Bot listening at http://localhost:${port}`);
+});
