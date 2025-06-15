@@ -1,24 +1,23 @@
 
-const express = require('express');
+const { Client } = require('whatsapp-web.js');
+const qrcode = require('qrcode-terminal');
 const axios = require('axios');
-const app = express();
-const PORT = process.env.PORT || 3000;
+const client = new Client();
 
-app.use(express.json());
+client.on('qr', qr => qrcode.generate(qr, {small: true}));
+client.on('ready', () => console.log('Nayla Bot is ready!'));
 
-app.post('/webhook', async (req, res) => {
-    const message = req.body.message || 'Pesan kosong';
+client.on('message', async msg => {
+    const webhookUrl = "http://localhost:5678/webhook-test/8e2c55bc-c1e4-45bb-96ec-bfe8fb9c8c3c";
+    const payload = { sessionId: msg.from, chatInput: msg.body, action: "sendMessage" };
+
     try {
-        const response = await axios.post(process.env.N8N_URL, {
-            text: message
-        });
-        console.log('Berhasil kirim ke N8N:', response.data);
+        const response = await axios.post(webhookUrl, payload);
+        const reply = response.data.reply || "Terima kasih, pesan Anda sudah diterima.";
+        msg.reply(reply);
     } catch (err) {
-        console.error('Gagal kirim ke N8N:', err.message);
+        msg.reply("Maaf, terjadi kesalahan saat menghubungi sistem.");
     }
-    res.send({ status: 'Pesan diterima' });
 });
 
-app.listen(PORT, () => {
-    console.log(`✅ Nayla Bot aktif di PORT ${PORT}`);
-});
+client.initialize();
